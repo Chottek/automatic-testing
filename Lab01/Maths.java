@@ -1,3 +1,5 @@
+import java.awt.image.BufferedImage;
+import java.io.IOException;
 import java.util.Arrays;
 
 public class Maths {
@@ -41,6 +43,13 @@ public class Maths {
     public static int[] sort(int[] array){
         Arrays.sort(array);
         return array;
+    }
+
+    public void exceptionThrower() throws IOException {
+        BufferedImage bd = javax.imageio.ImageIO.read(new java.io.File("nonexistant.png"));
+        if(bd == null){
+            throw new IOException("Image is null");
+        }
     }
 
     public String getName() {

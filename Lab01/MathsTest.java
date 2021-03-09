@@ -64,4 +64,10 @@ public class MathsTest {
         mathsObj = new Maths(null, 10);
         assertNull(mathsObj.getName());
     }
+
+    @Test
+    public void checkIfThrowsException(){
+        mathsObj = new Maths("HelloBeautifulWorld", 1);
+        assertThrows(java.io.IOException.class, () -> mathsObj.exceptionThrower());
+    }
 }
