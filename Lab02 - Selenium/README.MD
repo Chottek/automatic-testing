@@ -49,7 +49,14 @@ GmotoTest class - testing site: https://www.gmoto.pl/
   - entering wrong e-mail and password
   - clicking login button
   - checking if alert of wrong credentials became visible
-  
+- Wrong Message Form Credentials Testing
+  - clicking button directing to "Contact Us" page
+  - clicking a "Send Message" button
+  - legit name input
+  - bad e-mail address input
+  - legit message input
+  - clicking form submit button
+  - checking if alert of wrong e-mail became visible
 ---
 
 

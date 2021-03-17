@@ -84,6 +84,21 @@ public class GmotoTest {
         assertTrue(driver.findElements(By.cssSelector(".alert:nth-child(3)")).size() > 0);      //check if an error appears (intentionally)
     }
 
+    @Test
+    public void wrongEmailAlert(){
+        final String name = "Marcin";
+        final String bad_mail = "mstepin";
+        final String msg_content = "hello";
+
+        driver.findElement(By.cssSelector(".col-sm-4 .glyphicon-earphone")).click();         //Click "Contact us"
+        driver.findElement(By.linkText("Wyślij wiadomość")).click();                         //Click link to message sending
+        driver.findElement(By.name("imie")).sendKeys(name);                    //Add name to input
+        driver.findElement(By.name("email")).sendKeys(bad_mail);               //Add wrong e-mail to input
+        driver.findElement(By.name("tresc")).sendKeys(msg_content);            //Add message content to input
+        driver.findElement(By.name("wyslij")).click();                                      //Click form submit button
+        assert(driver.findElements(By.cssSelector(".row:nth-child(2) .alert:nth-child(1)")).size() > 0);   //Check if there's an alert of bad e-mail
+    }
+
 
 
 
