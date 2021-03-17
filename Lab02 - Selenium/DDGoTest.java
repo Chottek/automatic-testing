@@ -5,6 +5,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.edge.EdgeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
@@ -43,6 +44,8 @@ public class DDGoTest {
         driver.manage().window().maximize();
         driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
         driver.get(DDGO_PATH);
+
+        LOG.info("Initialized {} on path {}", driver.getClass().getSimpleName(), driver.getCurrentUrl());
     }
 
     @AfterEach
@@ -51,9 +54,9 @@ public class DDGoTest {
     }
 
     @Test
-    public void search(){
+    public void search() {
         final String searchValue = "Cagiva 600 W16";
-        LOG.info("Test1 -> search {}", searchValue);
+        LOG.info("Test1 -> search using \"{}\" query", searchValue);
         var searchInput = driver.findElement(By.id("search_form_input_homepage"));      //Getting search input by id
         searchInput.sendKeys(searchValue);                                           //Adding text to search input
         var searchBtn = driver.findElement(By.id("search_button_homepage"));           //Getting search btn by id
@@ -62,11 +65,11 @@ public class DDGoTest {
         LOG.info(result.getText());                                                              //Logging with SLF4J Logger
         assertTrue(result.getText().contains("scigacz.pl") ||
                 result.getText().contains("sprzedajemy.pl") ||
-                    result.getText().contains("polskajazda.pl"));   //Assertion that result contains String
+                result.getText().contains("polskajazda.pl"));   //Assertion that result contains String
     }
 
     @Test
-    public void inputAndClear(){
+    public void inputAndClear() {
         final String searchValue = "Suzuki GSX-R 1300 Hayabusa Turbo";
         LOG.info("Test2 -> input and clear {}", searchValue);
         var searchInput = driver.findElement(By.id("search_form_input_homepage"));      //Getting search input by id
@@ -77,10 +80,23 @@ public class DDGoTest {
     }
 
     @Test
-    public void checkSVGLaptop(){
-        LOG.info("Test3 -> check if button exists");
-        var img = driver.findElement(By.className("content-info__item__icon"));        //Finding first elementy by class name
+    public void changeLanguageTest() {
+        LOG.info("Test3 -> check language change option");
+        driver.findElement(By.linkText("⇶")).click();                                               //Click hamburger menu
+        driver.findElement(By.linkText("Wszystkie ustawienia")).click();                            //Select settings
+        driver.findElement(By.id("setting_kad")).click();                                           //Click element found by id
+        var lang = driver.findElement(By.id("setting_kad"));                             //
+        lang.findElement(By.xpath("//option[. = 'Deutsch (Deutschland)']")).click();                //click Deutsch option
+        driver.findElement(By.cssSelector(".header__logo")).click();                                //go back to main page
+        assertTrue(driver.findElement(By.cssSelector(".badge-link__title > span")).getText().contains("Wir schaffen Abhilfe."));  //assertion that String on main page is in german language
+    }
+
+    @Test
+    public void checkSVGLaptop() {
+        LOG.info("Test4 -> check if button exists");
+        var img = driver.findElement(By.className("content-info__item__icon"));        //Finding first element by class name
         assertEquals("https://duckduckgo.com/assets/add-to-browser/cppm/laptop.svg", img.getAttribute("src"));   //Getting data by src attribute
     }
+
 
 }
