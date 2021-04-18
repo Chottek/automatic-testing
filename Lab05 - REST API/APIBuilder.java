@@ -3,10 +3,7 @@ package pl.fox.lab5;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class APIBuilder {
 
@@ -14,8 +11,8 @@ public class APIBuilder {
 
     private String site;
     private String protocol;
-    private List<String> subsites = new ArrayList<>();
-    private Map<String, String> args = new HashMap<>();
+    private final List<String> subsites = new ArrayList<>();
+    private final Map<String, String> args = new LinkedHashMap<>();
 
     public APIBuilder withHTTP() {
         this.protocol = "http://";
@@ -54,7 +51,7 @@ public class APIBuilder {
         LOG.info("Merged {} and {}", protocol, site);
 
         if(subsites.size() != 0){
-            subsites.forEach(subsite -> sb.append(subsite).append("/"));
+            subsites.forEach(sb::append);
             LOG.info("Added subsites: {}", subsites.toString());
         }
 
