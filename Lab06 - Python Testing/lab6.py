@@ -1,32 +1,17 @@
-import string
+import winhandler as win
+import linhandler as linux
+import platform
+import sys
 
 
-class TestClass:
+class Chooser:
 
-    sys_choice = ""
-
-    def __init__(self, sys_choice):
-        self.sys_choice = sys_choice
-
-    def choice(self, system: string):
-        if system.upper() != "WINDOWS" or system.upper() != "LINUX":
+    def choice(self, system, arg):
+        if system.upper() != ("WINDOWS" or "LINUX" or "DARWIN"):
             return system + " isn't a right parameter (windows or linux is suitable)"
 
-    def name(self, a):
-        a = a + self.sys_choice
-        return a
-
-    def method(self):
-        return self.name(1)
+        return win.WinHandler().handle(arg) if system.upper() == "WINDOWS" \
+            else linux.LinHandler().handle(arg)
 
 
-print(TestClass(1).method())
-
-# {
-#     'wartosc': 'parametr1',
-#     'wartosc2': ['parametr2', 'parametr3'],
-#     'ls':{
-#         '-l': 'wyswietlanie szczegolowe',
-#         '-la': 'asd asd'
-#     }
-# }
+print(Chooser().choice(platform.system(), sys.argv[1]))
