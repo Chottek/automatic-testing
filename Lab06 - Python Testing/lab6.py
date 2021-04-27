@@ -7,11 +7,12 @@ import sys
 class Chooser:
 
     def choice(self, system, arg):
-        if system.upper() != ("WINDOWS" or "LINUX" or "DARWIN"):
+        choice = system.upper()
+        if (choice != "WINDOWS") and (choice.upper() != "LINUX") and (choice.upper() != "DARWIN"):
             return system + " isn't a right parameter (windows or linux is suitable)"
 
         return win.WinHandler().handle(arg) if system.upper() == "WINDOWS" \
             else linux.LinHandler().handle(arg)
 
 
-print(Chooser().choice(platform.system(), sys.argv[1]))
+# print(Chooser().choice(platform.system(), sys.argv[1]))

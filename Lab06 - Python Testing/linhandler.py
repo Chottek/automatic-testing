@@ -6,7 +6,6 @@ class LinHandler:
             else "Wrong argument!"
 
     DICTIONARY = {
-        'whoami': 'Actually I am a script ( ͡~ ͜ʖ ͡°) [IN LINUX]',
         'rm': {
             '-f': 'ignore nonexistent files and arguments, never prompt',
             '-i': 'prompt before every removal',
